@@ -1,0 +1,51 @@
+# Starting Time, Duration, and Starting Day
+start = "9:45 PM"
+duration = "5:40"
+start_day = "Monday"  # Assuming we start on a specific day
+
+# Split the start time
+initial_hour = int(start.sㅌㅇㅇplit(":")[0])
+initial_minute = int(start.split(":")[1].split(" ")[0])
+am_or_pm = start.split(":")[1].split(" ")[1]
+
+# Split the duration
+hours_added = int(duration.split(":")[0])
+minutes_added = int(duration.split(":")[1])
+
+# Convert to 24-hour format for easier calculation
+if am_or_pm == "PM" and initial_hour != 12:
+    whole_initial_hour = 12 + initial_hour
+elif am_or_pm == "AM" and initial_hour == 12:
+    whole_initial_hour = 0
+else:
+    whole_initial_hour = initial_hour
+
+# Calculate total minutes for both start and duration
+total_start_minutes = (whole_initial_hour * 60) + initial_minute
+total_duration_minutes = (hours_added * 60) + minutes_added
+
+# Total minutes after adding duration
+total_new_minutes = total_start_minutes + total_duration_minutes
+
+# Calculate days and remaining hours/minutes
+days_passed = total_new_minutes // (24 * 60)  # Integer division for complete days
+remaining_minutes = total_new_minutes % (24 * 60)  # Remainder after days
+new_whole_hour = remaining_minutes // 60
+new_minute = remaining_minutes % 60
+
+# Convert to 12-hour format
+final_hour = new_whole_hour % 12
+if final_hour == 0:
+    final_hour = 12
+final_am_or_pm = "PM" if (new_whole_hour % 24) >= 12 else "AM"
+
+# Day calculation (Mon-Sun)
+days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+start_day_index = days_of_week.index(start_day)
+final_day_index = (start_day_index + days_passed) % 7  # Modulo 7 to loop back to Monday after Sunday
+final_day = days_of_week[final_day_index]
+
+# Output
+print(f"Start Time: {start} on {start_day}")
+print(f"Duration: {duration}")
+print(f"End Time: {final_hour}:{new_minute:02d} {final_am_or_pm} on {final_day}")
