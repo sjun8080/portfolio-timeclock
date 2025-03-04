@@ -1,25 +1,21 @@
 from time_calculator import TimeCalculator
 
 def main():
-    """Main function to demonstrate the TimeCalculator usage"""
+    """Interactive TimeCalculator program"""
     calculator = TimeCalculator()
-    
-    # Example calculations
-    durations = [
-        "5:40",  # Valid duration
-        "2:30",  # Valid duration
-        "25:00", # Valid duration crossing day boundary
-        "1:60",  # Invalid minutes
-        "abc"    # Invalid format
-    ]
-    
+
     print("Time Calculator\n" + "="*20 + "\n")
-    
-    for duration in durations:
-        print(f"\nCalculating for duration: {duration}")
+    print("Enter duration in HH:MM format (e.g., 5:40)")
+    print("Type 'exit' to quit\n")
+
+    while True:
+        duration = input("Enter duration: ").strip()
+        if duration.lower() == 'exit':
+            break
+
         print("-" * 40)
         result = calculator.format_output(duration)
-        print(result)
+        print(result + "\n")
 
 if __name__ == "__main__":
     main()
